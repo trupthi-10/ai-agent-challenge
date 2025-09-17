@@ -41,21 +41,8 @@ python agent.py --target icici
 - Automatically generates a parser for the bank.
 - Validates parsed data against data/<bank>/result.csv if available.
 
-**  Directory Structure:
 
-project-root/
-│
-├─ custom_parsers/         # Generated parsers for each bank
-├─ data/                   # Bank PDFs and reference CSVs
-│   └─ icici/
-│       ├─ sample.pdf
-│       └─ result.csv
-├─ app.py                  # Streamlit interface
-├─ agent.py                # Parser agent logic
-├─ requirements.txt
-└─ README.md
-
-Add New Bank:
+** To Add New Bank:
 
 1. Upload a sample PDF to data/<bank>/sample.pdf.
 2. Add a reference CSV as data/<bank>/result.csv.
