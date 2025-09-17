@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Bank Statement Parser Agent
 ---------------------------
@@ -17,7 +16,6 @@ from pathlib import Path
 
 import pandas as pd
 
-# --- Groq API (Optional) ---
 try:
     from groq import Groq
     GROQ_API_KEY = "your_groq_api_key_here"
@@ -26,16 +24,15 @@ except Exception:
     client = None
     print("⚠ Groq client not available. Falling back to default parser template.")
 
-# --- Directories ---
 PROJECT_ROOT = Path(__file__).parent.resolve()
 PARSERS_DIR = PROJECT_ROOT / "custom_parsers"
 DATA_DIR = PROJECT_ROOT / "data"
 PARSERS_DIR.mkdir(exist_ok=True)
 
-# --- Expected schema ---
+
 EXPECTED_COLUMNS = ["Date", "Description", "Debit Amt", "Credit Amt", "Balance"]
 
-# --- Default parser template ---
+
 DEFAULT_TEMPLATE = """\
 import pandas as pd
 import pdfplumber
@@ -224,3 +221,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
