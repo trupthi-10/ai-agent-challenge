@@ -26,6 +26,8 @@ pip install -r requirements.txt
 
 ** Usage:
 
+Groq API Key: If you want the parser agent to use the LLM-based parser generation, open `agent.py` and replace the placeholder API key:
+ GROQ_API_KEY = "your_groq_api_key_here"
 Run Streamlit app:
 streamlit run app.py
 
