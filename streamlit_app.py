@@ -6,14 +6,13 @@ import re
 from pathlib import Path
 from agent import BankParserAgent, DATA_DIR
 
-# --- Banks & Expected Columns ---
+
 BANKS = ["icici", "sbi", "hdfc", "axis", "kotak"]
 EXPECTED_COLUMNS = ["Date", "Description", "Debit Amt", "Credit Amt", "Balance"]
 
-# --- Streamlit Page Config ---
+
 st.set_page_config(page_title="Bank Parser Agent", layout="wide")
 
-# --- Custom CSS for nicer UI ---
 st.markdown("""
 <style>
 .stButton>button {
@@ -47,7 +46,6 @@ st.markdown(
     "and validate against the reference CSV if available."
 )
 
-# --- Helper Functions (ALL LOGIC PRESERVED) ---
 def canonical_col_name(col: str) -> str:
     if not isinstance(col, str):
         return col
@@ -186,7 +184,6 @@ with st.container():
         4. Parsed DataFrame and comparison (if CSV exists) will be shown below.
         """)
 
-# --- Run Parser ---
 if run_parser:
     if not bank_name:
         st.error("⚠ Please select a bank.")
@@ -248,3 +245,4 @@ if run_parser:
         except Exception as e:
             st.error(f"❌ Error running parser: {e}")
             st.code(traceback.format_exc())
+
