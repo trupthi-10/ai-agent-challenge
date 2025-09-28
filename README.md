@@ -1,58 +1,99 @@
-Bank Statement Parser Agent
+# 🏦 Bank Statement Parser Agent
 
-A Python & Streamlit application to parse bank statement PDFs/CSVs into structured DataFrames, and validate them against reference CSVs. The app can automatically generate custom parsers for different banks.
+**Bank Statement Parser Agent** is a Python project that automatically generates parsers for different banks’ statements (PDF/CSV).
+It leverages **GPT4All** (local LLM) or a **default parser template** to normalize raw statements into a clean DataFrame with the following schema:
 
-** Features:
+`Date | Description | Debit Amt | Credit Amt | Balance`
 
-- Upload bank statement PDFs and automatically parse them.
-- Supports multiple banks: ICICI, SBI, HDFC, Axis, Kotak (easily extendable).
-- Automatically handles repeated headers, empty rows, numeric cleaning, and column normalization.
-- Compares parsed data with reference CSVs for validation.
-- User-friendly Streamlit interface with preview and debug info.
+---
 
-** Installation:
+## ✨ Features
 
-1. Clone this repository:
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
+* 🔄 Supports multiple banks (ICICI, HDFC, SBI, etc.)
+* 📑 Handles **PDF** and **CSV** formats
+* 🧹 Cleans repeated headers, empty rows, and malformed values
+* 🔍 Auto-normalizes columns (Debit, Credit, Balance, Narration → unified format)
+* ✅ Includes self-testing with reference CSVs
+* 💡 Can extend to new banks by just adding their sample data
+
+---
+
+## 📂 Folder Structure
+
+```plaintext
+New challenge/
+├── agent.py                  # Main agent script
+├── custom_parsers/           # Auto-generated bank parsers (per bank)
+│   └── icici_parser.py
+├── data/
+│   └── icici/
+│       ├── icici_sample.pdf  # Sample statement (PDF)
+│       └── result.csv        # Expected clean output for testing
+├── requirements.txt          # Python dependencies
+└── README.md                 # Project documentation
+```
+
+---
+
+## ⚙️ Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/bank-parser-agent.git
+   cd bank-parser-agent
+   ```
 
 2. Create a virtual environment (optional but recommended):
-python -m venv venv
-source venv/bin/activate   # Linux/macOS
-venv\Scripts\activate      # Windows
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # (Linux/Mac)
+   venv\Scripts\activate      # (Windows)
+   ```
 
 3. Install dependencies:
-pip install -r requirements.txt
 
-** Usage:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Groq API Key: If you want the parser agent to use the LLM-based parser generation, open `agent.py` and replace the placeholder API key:
- GROQ_API_KEY = "your_groq_api_key_here"
-Run Streamlit app:
-streamlit run app.py
+4. (Optional) If using GPT4All, make sure to **set your API key / local model path** inside `agent.py`.
+   If no LLM is available, the project falls back to a default parser template.
 
-1. Open the URL shown in the terminal (usually http://localhost:8501).
-2. Select the bank from the dropdown.
-3. Upload a PDF bank statement.
-4. Click Run Parser.
-5. Parsed data and comparison results (if CSV exists) will be displayed.
+---
 
-Run parser agent from CLI:
+## 🚀 Usage
+
+Run the agent for a specific bank (e.g., ICICI):
+
+```bash
 python agent.py --target icici
+```
 
-- Automatically generates a parser for the bank.
-- Validates parsed data against data/<bank>/result.csv if available.
+This will:
+
+* Generate (or update) a parser in `custom_parsers/icici_parser.py`
+* Parse the provided PDF/CSV in `data/icici/`
+* Compare results against `data/icici/result.csv`
+* Report success or mismatches
+
+---
+
+## 📌 Extending to New Banks
+
+To add support for another bank (e.g., HDFC):
+
+1. Create a folder under `data/hdfc/`
+2. Add a sample PDF (`hdfc_sample.pdf`) and reference CSV (`result.csv`)
+3. Run:
+
+   ```bash
+   python agent.py --target hdfc
+   ```
+4. A new parser `custom_parsers/hdfc_parser.py` will be generated and tested.
+
+---
 
 
-** To Add New Bank:
-
-1. Upload a sample PDF to data/<bank>/sample.pdf.
-2. Add a reference CSV as data/<bank>/result.csv.
-3. The agent will generate a custom parser automatically.
-
-Dependencies:
-
-- Python >= 3.9
-- pandas
-- streamlit
-- pdfplumber
+---
