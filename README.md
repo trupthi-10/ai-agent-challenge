@@ -94,6 +94,3 @@ To add support for another bank (e.g., HDFC):
 4. A new parser `custom_parsers/hdfc_parser.py` will be generated and tested.
 
 ---
-
-
----
